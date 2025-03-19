@@ -1,0 +1,42 @@
+[project]
+name = "genesis-mcp"
+version = "0.1.0"
+description = "Model Context Protocol server for Genesis World simulations"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]==1.4.1",  # Include CLI extras for command-line tools
+    # genesis-world==0.2.1 requires pydantic==2.7.1 but we install it with --no-deps
+    "pydantic==2.7.2",  # Compatible with genesis-world's requirements
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "requests>=2.28.0",
+    "httpx>=0.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "flake8>=6.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+pythonpath = [".", "src"]
+
+[tool.setuptools]
+packages = { find = { where = ["src"] } }
