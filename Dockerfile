@@ -41,4 +41,4 @@ EXPOSE 8000
 EXPOSE 5173
 
 # Start the MCP Inspector in background and the MCP server
-CMD mcp-inspector --address $INSPECTOR_HOST --port $INSPECTOR_PORT & python server.py
+CMD mcp-inspector --port $INSPECTOR_PORT --address $INSPECTOR_HOST & python server.py
