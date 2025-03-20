@@ -1,8 +1,11 @@
-"""Genesis World MCP server using FastMCP."""
+"""Genesis World MCP server using FastMCP with stdio transport."""
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Context
 import logging
 import sys
+
+# Import the actual implementation
+from src.genesis_mcp.services.simulation import SimulationService
 
 # Configure logging
 logging.basicConfig(
@@ -11,6 +14,9 @@ logging.basicConfig(
     stream=sys.stdout
 )
 logger = logging.getLogger(__name__)
+
+# Create simulation service
+simulation_service = SimulationService()
 
 # Create MCP server
 logger.debug("Creating FastMCP server instance")
@@ -21,6 +27,10 @@ mcp = FastMCP("Genesis World")
 def get_world_info(name: str) -> str:
     """Get information about Genesis World features."""
     logger.debug(f"Resource request for world_info: {name}")
+    
+    # Get world info from the service
+    world_info = simulation_service.get_world_info()
+    
     if name == "overview":
         return """
         Genesis World is a simulation environment for creating and running complex simulations.
@@ -34,6 +44,9 @@ def get_world_info(name: str) -> str:
         - Run step-based simulations
         - Collect and analyze simulation results
         """
+    elif name == "api":
+        # Return the API details from the service
+        return str(world_info)
     else:
         return f"No information available for '{name}'"
 
@@ -51,29 +64,14 @@ def run_simulation(code: str, parameters: dict = None) -> dict:
     """
     logger.debug(f"Simulation request with parameters: {parameters}")
     try:
-        # This is just a placeholder - we'd normally use genesis here
-        # but for demonstration purposes, we're just printing the code
-        
-        print(f"Running simulation with parameters: {parameters or {}}")
-        print(f"Code:\n{code}")
-        
-        # In a real implementation, we would execute the code using
-        # the genesis package and return the results
+        # Use the real simulation service implementation
+        result = simulation_service.run_simulation(code, parameters)
         
         return {
             "success": True,
             "message": "Simulation executed successfully",
-            "logs": [
-                "Simulation started",
-                "Step 1: Agents initialized",
-                "Step 2: Resources collected",
-                "Simulation completed"
-            ],
-            "results": {
-                "steps_completed": 10,
-                "agents": 2,
-                "resources_collected": 5
-            }
+            "logs": result.logs,
+            "results": result.result
         }
     except Exception as e:
         logger.exception("Error executing simulation")
@@ -94,6 +92,21 @@ def basic_simulation(world_size: int = 10, agent_count: int = 2) -> str:
         agent_count: Number of agents to create
     """
     logger.debug(f"Prompt request for basic_simulation with world_size={world_size}, agent_count={agent_count}")
+    
+    # Get examples from the simulation service
+    examples = simulation_service.get_world_info().get("examples", [])
+    basic_example = next((e for e in examples if e.get("name") == "Basic Simulation"), None)
+    
+    # Use the example if found, otherwise use our default template
+    if basic_example:
+        # Customize the example with user parameters
+        code = basic_example.get("code", "")
+        # Replace any parameters in the code if needed
+        # This is a simple example - you might need more sophisticated templating
+        code = code.replace("world = gs.World()", f"world = gs.World(size=({world_size}, {world_size}))")
+        return code
+    
+    # Fall back to our template
     return f"""
     # Basic Genesis World Simulation
     
@@ -126,11 +139,12 @@ def basic_simulation(world_size: int = 10, agent_count: int = 2) -> str:
     }}
     """
 
-
 if __name__ == "__main__":
-    logger.debug("Starting MCP server")
+    logger.debug("Starting MCP server with stdio transport")
+    
     try:
-        mcp.run()
+        # Use FastMCP's built-in transport support with stdio
+        mcp.run(transport="stdio")
     except Exception as e:
         logger.exception("Error starting MCP server")
-        raise 
+        raise

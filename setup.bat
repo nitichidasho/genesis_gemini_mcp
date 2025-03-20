@@ -28,6 +28,10 @@ REM Verify Python interpreter is working
 echo Verifying Python interpreter...
 where python
 
+REM Install PyTorch (required by genesis-world)
+echo Installing PyTorch (required for genesis-world)...
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
 REM Create requirements.lock if it doesn't exist
 if not exist requirements.lock (
     echo Creating requirements.lock from pyproject.toml...
@@ -38,22 +42,34 @@ REM Install from the lock file
 echo Installing dependencies from lock file...
 uv pip install -r requirements.lock
 
-REM Install genesis without dependencies
-echo Installing genesis without dependencies...
-uv pip install genesis==0.2.1 --no-deps
-
 REM Install the package in development mode
 echo Installing the package in development mode...
 uv pip install -e .
 
+REM Uninstall pygel3d to avoid conflict with taichi
+echo Uninstalling pygel3d to avoid conflict with taichi...
+uv pip uninstall -y pygel3d
+
+REM Install mcp without dependencies
+echo Installing mcp package without dependencies...
+uv pip install "mcp[cli]==1.4.1" --no-deps
+
+REM Install mcp dependencies except pydantic
+echo Installing mcp dependencies except pydantic...
+uv pip install anyio httpx httpx-sse pydantic-settings sse-starlette "starlette<0.39.0,>=0.37.2" uvicorn
+
+REM Ensure correct typing-extensions version
+echo Installing correct version of typing-extensions...
+uv pip install typing-extensions==4.12.0
+
 REM Check if npm is installed
 where npm >nul 2>&1
 if %errorlevel% equ 0 (
-    echo Installing MCP Inspector...
-    npm install -g @modelcontextprotocol/inspector@0.6.0
+    echo Installing MCP Inspector using Taobao npm registry for faster installation in China...
+    npm install -g @modelcontextprotocol/inspector@0.6.0 --registry=https://registry.npmmirror.com
 ) else (
     echo WARNING: npm not found. MCP Inspector will not be installed.
-    echo You can install it manually with: npm install -g @modelcontextprotocol/inspector@0.6.0
+    echo You can install it manually with: npm install -g @modelcontextprotocol/inspector@0.6.0 --registry=https://registry.npmmirror.com
 )
 
 echo.

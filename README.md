@@ -2,7 +2,26 @@
 
 # Genesis MCP Server
 
-A Model Context Protocol (MCP) server for Genesis World simulations.
+A Model Context Protocol (MCP) server for Genesis World simulations with visualization support.
+
+## Quick Start
+
+For the fastest way to get started with visualization:
+
+```bash
+# Run the simplified setup script (only installs what's needed)
+./setup.sh
+
+# Run the stdio client (opens a visualization window)
+./examples/stdio_client.py
+```
+
+This will directly start a Genesis World simulation with visualization using stdio transport.
+
+## Transport Method: stdio
+
+This server uses **stdio transport** which is required for Genesis World visualization features.
+The visualization components require a local runtime and cannot work over network transports.
 
 ## Setup
 
@@ -69,29 +88,28 @@ If you prefer to install dependencies manually:
 
 ## Running the Server
 
-Start the MCP server:
+````bash
+# Run with stdio transport (required for visualization)
+./start.sh
 
-```bash
-mcp run server.py
-```
+
+### Using with the MCP Inspector
 
 To use with the MCP Inspector for debugging:
 
 ```bash
-# In one terminal
+# In one terminal, start the inspector
 mcp-inspector
 
-# In another terminal
-mcp run server.py
-```
+# In another terminal, start the server with stdio transport
+python server.py
+````
 
-### Using MCP Inspector with uv
-
-If you're using uv and want to run with the MCP Inspector, configure the inspector with:
+Configure the MCP Inspector with:
 
 - Transport Type: STDIO
-- Command: uv
-- Arguments: run --with mcp mcp run server.py
+- Command: python
+- Arguments: server.py
 
 ## Available Resources
 
@@ -113,31 +131,13 @@ Run a Genesis World simulation with provided code and parameters:
 run_simulation
 ```
 
-## Available Prompts
+## MCP Client
 
-### Basic Simulation
-
-Generate a basic simulation script based on specified world size and agent count:
-
-```
-basic_simulation
-```
-
-## Development
-
-To run tests:
+The repository includes stdio client for visualization:
 
 ```bash
-pytest
-```
-
-## Docker
-
-To build and run with Docker:
-
-```bash
-docker build -t genesis-mcp .
-docker run -p 8000:8000 genesis-mcp
+# Run a simulation with Genesis World visualization
+./examples/stdio_client.py
 ```
 
 Happy hacking!
