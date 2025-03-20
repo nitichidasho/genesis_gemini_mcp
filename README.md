@@ -1,9 +1,10 @@
-<img src="imgs/mcp.png" alt="MCP" width="240" />
 <img src="imgs/big_text.png" alt="Genesis" width="200" />
 
 # Genesis World MCP Server
 
 [Model Context Protocol (MCP)](https://github.com/modelcontextprotocol/python-sdk) server for running [Genesis World](https://genesis-embodied-ai.github.io/) simulations. This server allows AI agents to generate and run Genesis World simulation code through a standardized protocol.
+
+<img src="imgs/mcp.png" alt="MCP" width="240" />
 
 ## Features
 
