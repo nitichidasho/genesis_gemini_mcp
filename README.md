@@ -1,200 +1,143 @@
 <img src="imgs/big_text.png" alt="Genesis" width="200" />
 
-# Genesis World MCP Server
+# Genesis MCP Server
 
-[Model Context Protocol (MCP)](https://github.com/modelcontextprotocol/python-sdk) server for running [Genesis World](https://genesis-embodied-ai.github.io/) simulations. This server allows AI agents to generate and run Genesis World simulation code through a standardized protocol.
+A Model Context Protocol (MCP) server for Genesis World simulations.
 
-<img src="imgs/mcp.png" alt="MCP" width="240" />
+## Setup
 
-## Features
+### Prerequisites
 
-- MCP endpoint for running Genesis World simulations
-- Access to Genesis World's simulation capabilities
-- Self-documenting API that exposes Genesis World features
-- Example simulations to help get started
-- MCP CLI integration for easy server management
+- Python 3.8+
+- uv package manager (`pip install uv`)
+- npm (optional, for MCP Inspector)
 
-## Installation
+### Installation
 
-There are dependency conflicts between `genesis` (requires pydantic==2.7.1) and `mcp` (requires pydantic>=2.7.2). Here are two ways to install:
-
-### Method 1: Using the lock file (recommended)
-
-This method uses a pre-generated lock file with working versions:
+#### Linux/macOS
 
 ```bash
 # Clone the repository
-git clone https://github.com/dustland/genesis-mcp.git
+git clone https://github.com/username/genesis-mcp.git
 cd genesis-mcp
 
-# Install with uv using the lock file
-uv pip install -r uv.lock
+# Run the setup script
+./setup.sh
+
+# Activate the virtual environment
+source .venv/bin/activate
 ```
 
-### Method 2: Manual installation
+#### Windows
 
-This method manually installs components to work around the dependency conflict:
-
-```bash
+```powershell
 # Clone the repository
-git clone https://github.com/dustland/genesis-mcp.git
+git clone https://github.com/username/genesis-mcp.git
 cd genesis-mcp
 
-# Install pydantic 2.7.2 (satisfies MCP's requirements and works with genesis)
-uv pip install pydantic==2.7.2
+# Run the setup script
+setup.bat
 
-# Install MCP with CLI tools
-uv pip install "mcp[cli]==1.4.1"
-
-# Install genesis without checking dependencies
-uv pip install genesis==0.2.1 --no-deps
-
-# Install remaining dependencies
-uv pip install -r requirements.txt
-
-# Install the package itself
-uv pip install -e . --no-deps
+# Activate the virtual environment
+.venv\Scripts\activate.bat
 ```
 
-## Project Structure
+### Manual Installation with uv
 
-```
-genesis-mcp/
-├── examples/                # Example client and simulations
-├── src/                     # Source code
-│   └── genesis_mcp/         # Main package
-│       ├── models/          # Data models
-│       ├── services/        # Business logic
-│       └── utils/           # Utility functions
-├── tests/                   # Test suite
-├── main.py                  # Entry point
-├── pyproject.toml           # Project metadata
-├── requirements.txt         # Production dependencies
-├── requirements-dev.txt     # Development dependencies
-└── uv.lock                  # Lock file with compatible versions
-```
+If you prefer to install dependencies manually:
 
-## Usage
+1. Create a virtual environment:
 
-### Starting the server
+   ```bash
+   uv venv .venv
+   source .venv/bin/activate  # Linux/macOS
+   .venv\Scripts\activate.bat  # Windows
+   ```
 
-You can start the server in several ways:
+2. Install dependencies from lock file:
 
-#### 1. Using Python directly
+   ```bash
+   uv pip install -r requirements.lock
+   uv pip install -e .
+   uv pip install genesis==0.2.1 --no-deps
+   ```
+
+3. Install MCP Inspector (optional):
+   ```bash
+   npm install -g @modelcontextprotocol/inspector@0.6.0
+   ```
+
+## Running the Server
+
+Start the MCP server:
 
 ```bash
-python main.py
+mcp run server.py
 ```
 
-#### 2. Using MCP CLI (recommended)
+To use with the MCP Inspector for debugging:
 
 ```bash
-# Development mode with auto-reload
-mcp dev main.py
+# In one terminal
+mcp-inspector
 
-# Or run a specific server file
-mcp run src/genesis_mcp/server.py
+# In another terminal
+mcp run server.py
 ```
 
-This starts the MCP server on port 8000.
+### Using MCP Inspector with uv
 
-### MCP Request Examples
+If you're using uv and want to run with the MCP Inspector, configure the inspector with:
 
-Request to run a simulation:
+- Transport Type: STDIO
+- Command: uv
+- Arguments: run --with mcp mcp run server.py
 
-```json
-{
-  "request_id": "sim-12345",
-  "request_type": "run_simulation",
-  "inputs": {
-    "code": "world = gs.World()\nagent = gs.Agent(position=(0, 0))\nworld.add_agent(agent)\n\nfor step in range(10):\n    agent.move(direction=\"north\", distance=1)\n    world.step()\n    print(f\"Step {step}: Agent at position {agent.position}\")\n\nresult = {\n    \"world_state\": world.get_state(),\n    \"agent_positions\": [a.position for a in world.agents]\n}",
-    "parameters": {
-      "max_steps": 10
-    }
-  }
-}
+## Available Resources
+
+### World Info
+
+Get information about Genesis World features:
+
+```
+world_info://{name}
 ```
 
-Request to get world information:
+## Available Tools
 
-```json
-{
-  "request_id": "info-12345",
-  "request_type": "get_world_info",
-  "inputs": {}
-}
+### Run Simulation
+
+Run a Genesis World simulation with provided code and parameters:
+
+```
+run_simulation
 ```
 
-## API
+## Available Prompts
 
-The MCP server exposes the following endpoints:
+### Basic Simulation
 
-- `POST /mcp` - MCP protocol endpoint
-- `GET /health` - Health check endpoint
+Generate a basic simulation script based on specified world size and agent count:
 
-## MCP Integration
-
-This project integrates with the Model Context Protocol (MCP), allowing AI agents to interact with Genesis World simulations. The key components of the MCP integration are:
-
-### 1. Request Types
-
-- `run_simulation`: Run a Genesis World simulation from provided code
-- `get_world_info`: Get information about the Genesis World API
-
-### 2. Using with AI Agents
-
-AI agents can use this MCP server to:
-
-1. Send simulation code to be executed (code must be generated by the AI agent or provided by the user)
-2. Execute the code via the MCP server
-3. Return and visualize the results
-
-Note: This server doesn't generate code itself - it only executes code that is sent to it. The code generation should happen on the client side (typically by an LLM).
-
-The API is designed to be self-documenting, with the `get_world_info` endpoint providing information about available modules, classes, and functions in Genesis World.
-
-### 3. MCP CLI Tools
-
-The MCP CLI provides helpful commands for managing your server:
-
-```bash
-# Run in development mode with auto-reload
-mcp dev main.py
-
-# Install the server to Claude Desktop
-mcp install main.py
-
-# Run the server
-mcp run main.py
 ```
-
-### 4. Examples
-
-Check the `examples/` directory for:
-
-- `mcp_client.py`: Example client showing how to call the MCP server
-- `simple_simulation.py`: A standalone Genesis World simulation
+basic_simulation
+```
 
 ## Development
 
-### Running tests
+To run tests:
 
 ```bash
-# Run tests with coverage
-./run_tests.sh
-
-# Or manually
-python -m pytest tests/ --cov=src/genesis_mcp
+pytest
 ```
 
-### Dependency Resolution Issues
+## Docker
 
-There's a known conflict between `genesis` (requires pydantic==2.7.1) and `mcp` (requires pydantic>=2.7.2). Our solution:
+To build and run with Docker:
 
-1. Use pydantic 2.7.2 which is compatible with both packages in practice
-2. Install genesis with `--no-deps` to bypass its strict pydantic requirement
-3. Provide a uv.lock file with a working set of dependencies
+```bash
+docker build -t genesis-mcp .
+docker run -p 8000:8000 genesis-mcp
+```
 
-## License
-
-MIT
+Happy hacking!
