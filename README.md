@@ -1,4 +1,19 @@
-# Genesis MCP Server
+# Genesis-Gemini-MCP (Unofficial Extension)
+
+This project is a modified implementation of **Genesis** integrated with **Google Gemini AI** in a Model Context Protocol (MCP) style.
+
+- **Genesis MCP (this repository)**: https://github.com/nitichidasho/genesis_gemini_mcp  
+  Licensed under **MIT License**. See the [LICENSE](./LICENSE) file for details.
+
+- **Genesis (original framework)**: https://github.com/Genesis-Embodied-AI/Genesis  
+  Licensed under **Apache License 2.0**.
+
+This repository provides an MCP-style interface on top of Genesis for natural language-driven simulation.
+
+## Acknowledgements
+
+- This project builds upon [Genesis](https://github.com/Genesis-Embodied-AI/Genesis) (Apache 2.0 license)  
+- Extensions and modifications by **Shota Chida**  
 
 🚀 **AI駆動の物理シミュレーション** - Genesis World をGemini AIと統合したModel Context Protocol (MCP) サーバー
 
@@ -6,7 +21,7 @@ Genesis WorldとGoogle Gemini AIを組み合わせ、自然言語から物理シ
 
 ---
 
-## ✨ 主な特徴
+## 主な特徴
 
 🧠 **Gemini AI統合**
 - 自然言語からGenesis Worldコードを自動生成
@@ -29,7 +44,7 @@ Genesis WorldとGoogle Gemini AIを組み合わせ、自然言語から物理シ
 
 ---
 
-## 🚀 クイックスタート
+## クイックスタート
 
 ### 📋 前提条件
 
@@ -93,7 +108,7 @@ python genesis_server.py
 
 ---
 
-## 🎮 使用例
+## 使用例
 
 ### 基本的な使用方法
 
@@ -170,7 +185,7 @@ for i in range(1000):
 
 ---
 
-## 📂 プロジェクト構造
+## プロジェクト構造
 
 ```
 genesis-mcp/
@@ -206,7 +221,7 @@ genesis-mcp/
 
 ---
 
-## � 設定オプション
+## 設定オプション
 
 ### セットアップオプション
 
@@ -247,7 +262,7 @@ python genesis_server.py --debug
 
 ---
 
-## 🌐 VNC リモート接続
+## VNC リモート接続
 
 ### Windows → Linux サーバー
 
@@ -276,7 +291,7 @@ Windows PC (リアルタイム3D表示)
 
 ---
 
-## 🎛️ API リファレンス
+## API リファレンス
 
 ### MCPサーバー ツール
 
@@ -305,7 +320,7 @@ Genesis World機能情報
 
 ---
 
-## 🔍 トラブルシューティング
+## トラブルシューティング
 
 ### VNC接続できない
 
@@ -365,7 +380,7 @@ python start_vnc.py --status
 
 ---
 
-## 🛠️ 開発
+## 開発
 
 ### 開発環境セットアップ
 
@@ -403,7 +418,7 @@ python -m memory_profiler genesis_client.py
 
 ---
 
-## � システム要件
+## システム要件
 
 ### 最小要件
 - **CPU**: Intel/AMD x64 または Apple Silicon
@@ -425,40 +440,19 @@ python -m memory_profiler genesis_client.py
 
 ---
 
-## 🤝 コントリビューション
+## License
 
-### 貢献方法
+This project includes components from:
+- [Genesis MCP](https://github.com/hughlv/genesis-mcp), licensed under the MIT License.
+- [Genesis](https://github.com/Genesis-Embodied-AI/Genesis), licensed under the Apache License 2.0.
 
-1. **フォーク**: このリポジトリをフォーク
-2. **ブランチ**: 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. **コミット**: 変更をコミット (`git commit -m 'Add amazing feature'`)
-4. **プッシュ**: ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. **プルリクエスト**: プルリクエストを作成
-
-### 開発ガイドライン
-
-- **コード品質**: Black + isort + flake8準拠
-- **テスト**: 新機能には必ずテスト追加
-- **ドキュメント**: APIの変更は必ずドキュメント更新
-- **互換性**: 既存機能を破綻させない
-
-### 報告・要望
-
-- 🐛 **バグ報告**: [Issues](https://github.com/dustland/genesis-mcp/issues)
-- 💡 **機能要望**: [Discussions](https://github.com/dustland/genesis-mcp/discussions)
-- 📧 **直接連絡**: メンテナ向けメール
+Copyright © 2024 Genesis Authors
+Modifications and additional code © 2025 Shota Chida.
 
 ---
 
-## 📄 ライセンス
+## 謝辞
 
-MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
-
----
-
-## 🙏 謝辞
-
-- **[Genesis World](https://github.com/Genesis-Embodied-AI/Genesis)**: 革新的な物理シミュレーションフレームワーク
 - **[Google Gemini](https://ai.google.dev/)**: 高品質なAIコード生成
 - **[Model Context Protocol](https://modelcontextprotocol.io/)**: 標準化されたAI通信プロトコル
 

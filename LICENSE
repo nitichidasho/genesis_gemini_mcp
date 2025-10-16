@@ -1,6 +1,12 @@
+
+===============================================================================
 MIT License
+Portions of this software are based on the Genesis mcp framework
+(https://github.com/dustland/genesis-mcp/)
+===============================================================================
 
 Copyright (c) 2024 Genesis MCP Contributors
+Modified by Shota Chida
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +25,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+===============================================================================
+Portions of this software are based on the Genesis framework
+(https://github.com/Genesis-Embodied-AI/Genesis)
+distributed under the Apache License, Version 2.0:
+===============================================================================
+
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
+
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
+
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity.
+
+For the full text of the Apache License 2.0, see:
+http://www.apache.org/licenses/LICENSE-2.0
