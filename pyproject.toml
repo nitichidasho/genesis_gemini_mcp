@@ -1,19 +1,23 @@
 [project]
 name = "genesis-mcp"
 version = "0.1.0"
-description = "Model Context Protocol server for Genesis World simulations with stdio transport"
+description = "Model Context Protocol server for Genesis World simulations with LLM integration"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "pydantic==2.7.1", # Compatible with genesis-world
-    "typing-extensions==4.12.0", # Genesis World simulator
-    # mcp==1.4.1 will be installed manually with CLI support
-    "trimesh>=4.6.5", # Required for Genesis World visualizations
-    "pillow>=10.0.0", # Required for visualizations
-    "shapely>=2.0.0", # Required for visualizations
+    "pydantic>=2.7.1",
+    "typing-extensions>=4.12.0",
+    "trimesh>=4.6.5",
+    "pillow>=10.0.0", 
+    "shapely>=2.0.0",
     "anyio>=4.9.0",
     "httpx>=0.28.1",
-    "genesis-world>=0.2.1",
+    "google-generativeai>=0.3.0",
+    "mcp>=1.0.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "torchaudio>=2.0.0",
+    # Note: Genesis will be installed via git clone from https://github.com/Genesis-Embodied-AI/Genesis
 ]
 
 [project.optional-dependencies]
@@ -23,6 +27,36 @@ dev = [
     "black>=23.0.0",
     "isort>=5.0.0",
     "flake8>=6.0.0",
+]
+
+# LLM統合用オプション依存関係
+llm-gemini = [
+    "google-generativeai>=0.3.0",
+]
+
+llm-openai = [
+    "openai>=1.0.0",
+    "tiktoken>=0.5.0",
+]
+
+llm-huggingface = [
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
+]
+
+# VNC環境用依存関係 (Linux/Mac専用)
+vnc = [
+    "psutil>=5.9.0",  # プロセス監視
+    "Xlib>=0.33; sys_platform=='linux'",  # X11制御 (Linuxのみ)
+]
+
+# 全てのLLM機能
+llm-all = [
+    "google-generativeai>=0.3.0",
+    "openai>=1.0.0", 
+    "tiktoken>=0.5.0",
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
 ]
 
 [build-system]

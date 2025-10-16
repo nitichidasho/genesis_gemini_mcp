@@ -8,3 +8,78 @@ wheels/
 
 # Virtual environments
 .venv
+
+# 環境変数・機密情報
+.env
+.env.local
+.env.production
+.env.development
+*.env
+
+# VNC関連設定ファイル
+.genesis_vnc_config.json
+.genesis_virtual_display_*.pid
+.vnc/
+.Xauthority
+
+# API キー・認証情報
+*api_key*
+*secret*
+*password*
+credentials.json
+auth.json
+
+# ログファイル
+*.log
+logs/
+*.log.*
+
+# 一時ファイル
+tmp/
+temp/
+.tmp/
+.cache/
+
+# Genesis参照リポジトリ（サイズが大きいため）
+genesis_reference/
+
+# OS固有ファイル
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE・エディタ設定
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# テスト関連
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 実行時生成ファイル
+output/
+results/
+screenshots/
+recordings/
+
+# 開発・一時的なドキュメントファイル
+CONVERSATION_SYSTEM_DESIGN.md
+DOCUMENTATION_CLEANUP_REPORT.md
+EXAMPLES_CLEANUP_REPORT.md
+GEMINI_CLI_MIGRATION_REQUIREMENTS.md
+INTEGRATION_CLEANUP_REPORT.md
+TECHNICAL_REALITY_EXPLANATION.md
+USAGE_GUIDE_VERIFICATION_REPORT.md
+VNC_USAGE_GUIDE.md
+VNC_OPTIMIZATION_GUIDE.md
+
+# 開発メモ・一時ファイル
+開発メモ
+*.bak
+*.tmp
+*_backup
+*_old
