@@ -1,10 +1,8 @@
-<img src="imgs/big_text.png" alt="Genesis MCP" width="200" />
-
 # Genesis MCP Server
 
 🚀 **AI駆動の物理シミュレーション** - Genesis World をGemini AIと統合したModel Context Protocol (MCP) サーバー
 
-Genesis WorldとGoogle Gemini AIを組み合わせ、自然言語から高品質な物理シミュレーションコードを生成。VNC最適化により、SSH/リモート環境でも滑らかな3D表示を実現します。
+Genesis WorldとGoogle Gemini AIを組み合わせ、自然言語から物理シミュレーションコードを生成。VNC機能により、SSH/リモート環境でも3D表示を実現します。
 
 ---
 
@@ -28,7 +26,6 @@ Genesis WorldとGoogle Gemini AIを組み合わせ、自然言語から高品質
 🎯 **開発者体験**
 - ワンコマンド環境セットアップ
 - 統合テストとデバッグツール
-- 豊富なサンプルとドキュメント
 
 ---
 
@@ -53,20 +50,23 @@ cd genesis-mcp
 ```bash
 # Gemini APIキーを設定
 cp .env.example .env
+
 # .envファイルを編集してGEMINI_API_KEY=your_api_key_here を設定
+# または、setup.pyを使って設定
+python setup.py --gemini-key YOUR_KEY  # APIキー設定
+
+# 自動セットアップ
+python setup.py --all
 
 # 環境チェック
 python setup.py --check
-
-# 完全自動セットアップ
-python setup.py --all
 ```
 
 ### 3️⃣ VNC環境セットアップ（リモート表示用）
 
 ```bash
 # VNC環境構築
-python start_vnc.py
+python start_vnc.py --start
 
 # VNC接続確認
 python start_vnc.py --status
